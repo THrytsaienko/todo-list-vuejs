@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import store from '../store'
 import StatsItem from './stats-item'
 export default {
   name: 'stats',
@@ -18,15 +17,15 @@ export default {
   },
   computed: {
     completed () {
-      return store.getters.completed
+      return this.$store.getters.completed
     },
     uncompleted () {
-      return store.getters.uncompleted
+      return this.$store.getters.uncompleted
     }
   },
   methods: {
     clearAll () {
-      store.commit('clearCompleted')
+      this.$store.commit('clearCompleted')
     }
   }
 }

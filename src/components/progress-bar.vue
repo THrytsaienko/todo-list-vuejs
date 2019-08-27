@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import store from '../store'
+// import store from '../store'
 import RadialProgressBar from 'vue-radial-progress'
 
 export default {
@@ -25,10 +25,10 @@ export default {
   },
   computed: {
     completed () {
-      return store.getters.completed
+      return this.$store.getters.completed
     },
     total () {
-      return store.state.todos.length || 1
+      return this.$store.state.todos.length || 1
     },
     completedPercent () {
       return parseInt(this.completed / this.total * 100)
@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     completeAll () {
-      store.commit('completeAll')
+      this.$store.commit('completeAll')
     }
   }
 }

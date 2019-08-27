@@ -12,8 +12,7 @@
 </template>
 
 <script>
-import store from '../store'
-const uuid = require('uuid-v4')
+import uuid from 'uuid-v4'
 
 export default {
   name: 'todo-add',
@@ -25,13 +24,13 @@ export default {
   },
   methods: {
     addTodo () {
-      if (this.todo.length == 0) {
+      if (this.todo.length === 0) {
         this.error = true
         setTimeout(() => {
           this.error = false
         }, 5000)
       } else {
-        store.commit('addTodo', { id: uuid(), text: this.todo, complete: false, edit: false })
+        this.$store.commit('addTodo', { id: uuid(), text: this.todo, complete: false, edit: false })
         this.todo = ''
       }
     },

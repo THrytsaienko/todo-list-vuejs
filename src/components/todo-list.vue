@@ -1,24 +1,20 @@
 <template>
   <div class="todo-list">
-    <div v-for="todo in todos">
-      <TodoItem :key="todo.id" :todo="todo"></TodoItem>
+    <div v-for="todo in todos" :key="todo.id">
+      <TodoItem :todo="todo"></TodoItem>
     </div>
     <div class="todo-list__buttons">
-      <FilterButton @clicked="clickedFilter('all')" :active="filter === 'all' ? true : false"
-                    buttonName="All"
-                    class="todo-list__btn"></FilterButton>
-      <FilterButton @clicked="clickedFilter('completed')" :active="filter === 'completed' ? true : false"
-                    buttonName="Completed"
-                    class="todo-list__btn"></FilterButton>
-      <FilterButton @clicked="clickedFilter('uncompleted')" :active="filter === 'uncompleted' ? true : false"
-                    buttonName="Uncompleted"
-                    class="todo-list__btn"></FilterButton>
+      <FilterButton v-for="todoFilter in filters"
+                    :key="todoFilter"
+                    :buttonName="todoFilter"
+                    @clicked="clickedFilter(todoFilter)"
+                    :active="filter === todoFilter">
+      </FilterButton>
     </div>
   </div>
 </template>
 
 <script>
-import store from '../store'
 import TodoItem from './todo-item'
 import FilterButton from './filter-btn'
 export default {
@@ -29,23 +25,25 @@ export default {
   },
   computed: {
     todos () {
-      return store.getters.filteredTodos
+      return this.$store.getters.filteredTodos
     },
     filter () {
-      return store.state.filter
+      return this.$store.state.filter
+    },
+    filters () {
+      return ['all', 'completed', 'uncompleted']
     }
   },
-  mounted () {
+  created () {
     const todosFromLS = JSON.parse(localStorage.getItem('todos'))
     if (todosFromLS === null) {
       return
     }
-    store.commit('getFromLS', todosFromLS)
+    this.$store.commit('getFromLS', todosFromLS)
   },
   methods: {
     clickedFilter (type) {
-      store.commit('changeFilter', type)
-      return type
+      this.$store.commit('changeFilter', type)
     }
   }
 }
@@ -73,9 +71,7 @@ export default {
       margin-bottom: 0;
 
       @media screen and (max-width: 550px)  {
-        margin-bottom: 15px;
-
-        &:last-child {
+        &:not(:last-child) {
           margin-bottom: 0;
         }
       }

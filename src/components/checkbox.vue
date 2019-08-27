@@ -1,29 +1,14 @@
 <template>
-    <input type="checkbox" class="checkbox" @change="change" v-model="checkbox"
-           :checked="checkbox ? true : false">
+    <input type="checkbox" class="checkbox" @change="change" :checked="checked">
 </template>
 
 <script>
 export default {
   name: 'checkbox',
   props: ['checked'],
-  data () {
-    return {
-      checkbox: false
-    }
-  },
-  watch: {
-    checked (newVal) {
-      this.checkbox = newVal
-    }
-  },
-  mounted () {
-    this.checkbox = this.checked
-  },
   methods: {
     change () {
-      this.checkbox = !!this.checkbox
-      this.$emit('change', this.checkbox)
+      this.$emit('change', this.checked)
     }
   }
 }

@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import store from '../store'
 import Checkbox from './checkbox'
 
 export default {
@@ -59,16 +58,16 @@ export default {
       this.todo.edit = true
     },
     deleteTodo (id) {
-      store.commit('deleteTodo', id)
+      this.$store.commit('deleteTodo', id)
     },
     completeTodo (id) {
-      store.commit('completeTodo', id)
+      this.$store.commit('completeTodo', id)
     },
     updateTodo (e) {
       this.textTodo = e.target.innerText
       this.todo.text = this.textTodo
       this.todo.edit = false
-      store.commit('updateTodo', this.todo)
+      this.$store.commit('updateTodo', this.todo)
     }
   }
 }
